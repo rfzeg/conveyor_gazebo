@@ -1,0 +1,40 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <world name="conveyor_world">
+
+  <!-- Set the initial camera pose to be looking at the workspace. -->
+    <gui>
+      <camera name="user_camera">
+        <pose>-5.77761 2.2955 7.80606 0 0.9 -0.27</pose>
+      </camera>
+    </gui>
+
+    <physics type="ode">
+      <max_step_size>0.00625</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>160</real_time_update_rate>
+      <gravity>0 0 -9.8</gravity>
+    </physics>
+
+    <!-- Disable shadows. -->
+    <scene>
+      <shadows>false</shadows>
+    </scene>
+
+    <!--  A small chunk of the pale blue dot. -->
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <!-- A global light source -->
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+    <include>
+      <uri>model://conveyor</uri>
+      <pose>1.2 5 0 0 0 -1.571</pose> <!-- Warning: Do not change this pose -->
+    </include>
+
+  </world>
+</sdf>

@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8.3)
 project(conveyor_gazebo)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
-# add_compile_options(-std=c++11)
+add_compile_options(-std=c++11)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -20,7 +20,7 @@ find_package(catkin REQUIRED COMPONENTS
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
-
+find_package(gazebo REQUIRED)
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
@@ -52,18 +52,20 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-# add_message_files(
-#   FILES
-#   Message1.msg
-#   Message2.msg
-# )
+add_message_files(
+  DIRECTORY
+    msg
+  FILES
+    ConveyorBeltState.msg
+)
 
 ## Generate services in the 'srv' folder
-# add_service_files(
-#   FILES
-#   Service1.srv
-#   Service2.srv
-# )
+add_service_files(
+  DIRECTORY
+    srv
+  FILES
+    ConveyorBeltControl.srv
+)
 
 ## Generate actions in the 'action' folder
 # add_action_files(
@@ -73,10 +75,10 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   gazebo_msgs#   std_msgs
-# )
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -108,10 +110,16 @@ find_package(catkin REQUIRED COMPONENTS
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES conveyor_gazebo
-#  CATKIN_DEPENDS cmake_modules gazebo_msgs gazebo_plugins gazebo_ros message_generation roscpp std_msgs std_srvs
-#  DEPENDS system_lib
+  INCLUDE_DIRS
+    include
+  CATKIN_DEPENDS
+    gazebo_msgs
+    gazebo_plugins
+    gazebo_ros
+    message_runtime
+    roscpp
+    std_msgs
+    std_srvs
 )
 
 ###########
@@ -121,8 +129,14 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-# include
+  include
   ${catkin_INCLUDE_DIRS}
+  ${GAZEBO_INCLUDE_DIRS}
+  ${roscpp_INCLUDE_DIRS}
+)
+
+link_directories(
+  ${GAZEBO_LIBRARY_DIRS}
 )
 
 ## Declare a C++ library
@@ -154,6 +168,31 @@ include_directories(
 # target_link_libraries(${PROJECT_NAME}_node
 #   ${catkin_LIBRARIES}
 # )
+
+# Create the libConveyorBeltPlugin.so library.
+set(conveyor_belt_plugin_name ConveyorBeltPlugin)
+add_library(${conveyor_belt_plugin_name} src/plugins/ConveyorBeltPlugin.cc)
+target_link_libraries(${conveyor_belt_plugin_name}
+  ${GAZEBO_LIBRARIES}
+  #${side_contact_plugin_name}
+)
+
+# Create the libROSConveyorBeltPlugin.so library.
+set(ros_conveyor_belt_plugin_name ROSConveyorBeltPlugin)
+add_library(${ros_conveyor_belt_plugin_name} src/plugins/ROSConveyorBeltPlugin.cc)
+target_link_libraries(${ros_conveyor_belt_plugin_name}
+  ${conveyor_belt_plugin_name}
+  ${GAZEBO_LIBRARIES}
+)
+add_dependencies(${ros_conveyor_belt_plugin_name}
+  ${${PROJECT_NAME}_EXPORTED_TARGETS}
+)
+
+#install(TARGETS ${conveyor_belt_plugin_name}
+#  ARCHIVE DESTINATION lib
+#  LIBRARY DESTINATION lib
+#  RUNTIME DESTINATION bin
+#)
 
 #############
 ## Install ##
