@@ -17,6 +17,8 @@ Figure 1. Gazebo Simulation for the ARIAC Competition. [Source.](http://gazebosi
 + ROS Kinetic
 + Gazebo 7.0
 
+Note: This package has only been tested on Ubuntu 16.04 LTS with ROS Kinetic and Gazebo 7.0 or Gazebo 7.8.
+
 ### Installation
 
 Clone this to your local development environment:
@@ -57,8 +59,6 @@ It is recomended to start typing the command above and press the Tab key until t
 The "power" can range from 0.0 to 100.0. Use 0.0 to stop the conveyor
 
 Rememeber to unpause the simulation for the conveyor belt to start moving.
-
-This package has only been tested on Ubuntu 16.04 LTS with ROS Kinetic and Gazebo 7.0.
 
 ### Project Extensions
 There are many exciting possible extensions to this project:
