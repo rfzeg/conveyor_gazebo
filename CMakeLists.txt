@@ -120,6 +120,8 @@ catkin_package(
     roscpp
     std_msgs
     std_srvs
+  DEPENDS
+    gazebo_ros
 )
 
 ###########
@@ -177,6 +179,12 @@ target_link_libraries(${conveyor_belt_plugin_name}
   #${side_contact_plugin_name}
 )
 
+install(TARGETS ${conveyor_belt_plugin_name}
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin
+)
+
 # Create the libROSConveyorBeltPlugin.so library.
 set(ros_conveyor_belt_plugin_name ROSConveyorBeltPlugin)
 add_library(${ros_conveyor_belt_plugin_name} src/plugins/ROSConveyorBeltPlugin.cc)
@@ -188,11 +196,11 @@ add_dependencies(${ros_conveyor_belt_plugin_name}
   ${${PROJECT_NAME}_EXPORTED_TARGETS}
 )
 
-#install(TARGETS ${conveyor_belt_plugin_name}
-#  ARCHIVE DESTINATION lib
-#  LIBRARY DESTINATION lib
-#  RUNTIME DESTINATION bin
-#)
+install(TARGETS ${conveyor_belt_plugin_name}
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin
+)
 
 #############
 ## Install ##
