@@ -7,7 +7,7 @@ This package contains the conveyor belt model and plugin that is part of the
 greater GEAR (Gazebo Environment for Agile Robotics) ROS package developed by the Open Source Robotics Foundation. GEAR is the software used by teams participating in the Agile Robotics for Industrial Automation Competition (ARIAC) hosted by the National Institute of Standards and Technology (NIST).
 The link to the original source code for the version of GEAR used in ARIAC 2017 is [here.](https://bitbucket.org/osrf/ariac/commits/branch/ariac_2017).
 
-![](doc/imgs/ariac_env.jpg)
+![](docs/imgs/ariac_env.jpg)
 
 Figure 1. Gazebo Simulation for the ARIAC Competition. [Source.](http://gazebosim.org/ariac)
 
@@ -17,7 +17,7 @@ Figure 1. Gazebo Simulation for the ARIAC Competition. [Source.](http://gazebosi
 + ROS Kinetic
 + Gazebo 7.0
 
-Note: This package has only been tested on Ubuntu 16.04 LTS with ROS Kinetic and Gazebo 7.0 or Gazebo 7.8.
+Note: This package has only been tested on Ubuntu 16.04 LTS with ROS Kinetic and Gazebo 7.0, 7.8 and 7.15.
 
 ### Installation
 
@@ -39,7 +39,7 @@ Note: The simulation starts paused.
 
 A simulation environment as the one shown below should appear in Gazebo:
 
-![](doc/imgs/______.jpg)
+![](docs/imgs/conveyor_isolated.png)
 
 ### Activate the conveyor
 
@@ -59,6 +59,11 @@ It is recomended to start typing the command above and press the Tab key until t
 The "power" can range from 0.0 to 100.0. Use 0.0 to stop the conveyor
 
 Rememeber to unpause the simulation for the conveyor belt to start moving.
+
+### Issues / Limitations:
++ Modifying the pose of the SDF model in the .world file causes the plugin to stop working
++ Using a spawn service to load the SDF model into an empty world yields to "[Err] [ConveyorBeltPlugin.cc:72] Link not found"
++ Start the simulation paused, activate the conveyor belt via a service call and then unpause the simulation, otherwise the conveyor belt will not move.  
 
 ### Project Extensions
 There are many exciting possible extensions to this project:
