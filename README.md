@@ -63,11 +63,14 @@ Rememeber to unpause the simulation for the conveyor belt to start moving.
 ### Issues / Limitations:
 + Modifying the pose of the SDF model in the .world file causes the plugin to stop working
 + Using a spawn service to load the SDF model into an empty world yields to "[Err] [ConveyorBeltPlugin.cc:72] Link not found"
-+ Start the simulation paused, activate the conveyor belt via a service call and then unpause the simulation, otherwise the conveyor belt will not move.  
++ The conveyor belt will work only if simulation is started paused, the conveyor belt is activated via a service call, and then the simulation is unpaused. The conveyor belt will not move if the simulation has been unpaused before the service call to activate is send.  
 
 ### Project Extensions
 There are many exciting possible extensions to this project:
-+ Add fix that enables placing/spawning the conveyor anywhere in the simulated world. 
++ Add fix that enables placing/spawning the conveyor anywhere in the simulated world.
++ Add fix to allow to activate the conveyor belt once the simulation is running.
 + Avoid that objects protrude from the conveyor belt. Decrease the size of the collision box dynamically as it moves forward.
 + Implement reverse running of conveyor belt.
 
+### Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
