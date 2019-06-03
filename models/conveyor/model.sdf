@@ -80,7 +80,7 @@
         <collision name="belt_collision">
           <geometry>
             <box>
-              <size>9.7 0.6 0.006</size>
+              <size>9.7 0.68 0.006</size> <!-- made wider -->
             </box>
           </geometry>
           <surface>
